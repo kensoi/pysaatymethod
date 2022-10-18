@@ -43,8 +43,8 @@ def input_matrix(kritery_const):
                         matrix[i][j] = temp
 
     # Отражение матрицы по главной диагонали и возведение её элементов в -1 степень
-    for i in range(len(kritery_const)):
-        for j in range(len(kritery_const)):
+    for i in range(kritery_const):
+        for j in range(kritery_const):
             if i > j:
                 matrix[i][j] = 1/matrix[j][i]
 
@@ -59,9 +59,9 @@ def output_matrix_precise(matrix):
     print("Матрица попарного сравнения: ")
     print()
 
-    for i in enumerate(matrix):
-        for j in enumerate(matrix):
-            print(f"{matrix[i][j]:.4f}", end="")
+    for i, i_item in enumerate(matrix):
+        for j, j_item in enumerate(i_item):
+            print(f"{j_item:.4f}", end="")
 
         print()
 
@@ -75,12 +75,13 @@ def count_weight_coefficients(matrix, sum_const):
     response = []
 
     # расчёт суммы отношений для каждого критерия
-    for i in enumerate(matrix):
-        for j in enumerate(matrix):
-            sum_column += matrix[j][i]
+    for i, i_item in enumerate(matrix):
+        for j, j_item in enumerate(i_item):
+            sum_column += j_item
 
         response.append(sum_column/sum_const)
 
+    response.reverse()
     return response
 
 
@@ -99,7 +100,6 @@ def main(kritery_count:int):
 
     # Создание массива, хранящего весовые коэффициенты
     weight_coefficients = count_weight_coefficients(matrix, matrix_summed)
-    weight_coefficients.reverse()
 
     print("Весовые коэффициенты:", end=" ")
     print()
@@ -107,8 +107,6 @@ def main(kritery_count:int):
     # Форматирование вывода для соответствия условиям задачи
     for i in weight_coefficients:
         print(f"{i:.2f}", end="")
-
-    return 0
 
 
 if __name__ == "__main__":
